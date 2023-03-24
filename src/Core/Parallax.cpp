@@ -9,6 +9,7 @@
 
 Game::Parallax::Parallax()
 {
+    _window = window;
     _sprites = std::vector<sf::Sprite>();
     _textures = std::vector<sf::Texture>();
     _positions = std::vector<std::pair<int, int>>();

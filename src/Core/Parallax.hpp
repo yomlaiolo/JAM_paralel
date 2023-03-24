@@ -19,8 +19,10 @@ namespace Game {
             ~Parallax();
             void addLayer(sf::Sprite sprite, sf::Texture texture, std::vector<std::pair<int, int>> _positions, float speed);
             void update(sf::RenderWindow &window, float deltaTime);
+            void draw(sf::RenderWindow &window);
         protected:
         private:
+            sf::RenderWindow _window;
             std::vector<sf::Sprite> _sprites;
             std::vector<sf::Texture> _textures;
             std::vector<std::pair<int, int>> _positions;
