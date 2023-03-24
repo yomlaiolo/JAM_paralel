@@ -1,0 +1,8 @@
+*.o
+a.out
+vgcore*
+myteams_cli
+myteams_server
+coding-style-reports.log
+.vscode
+*.txt
