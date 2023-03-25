@@ -29,7 +29,6 @@ void Game::Map::Parse()
     
     if (file.is_open()) {
         while (getline(file, line)) {
-            std::cout << line << std::endl;
             for (int i = 0; i < (int)line.length(); i++) {
                 if (line[i] == '#') {
                     if (y < 8)
