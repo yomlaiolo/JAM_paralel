@@ -15,11 +15,12 @@ Game::Block::Block(const std::string &texture, const sf::Vector2f &coords, const
     _size = size;
     _texture.loadFromFile(texture);
     _sprite.setTexture(_texture);
-    _sprite.setTextureRect(sf::IntRect(0, 0, _size.x, _size.y));
     _isSolid = false;
     _isEvent = false;
     _event = Game::Event::NO;
     _sprite.setPosition(_coords);
+    //print coords
+    std::cout << "x: " << _coords.x << " y: " << _coords.y << std::endl;
 }
 
 Game::Block::~Block()
@@ -33,8 +34,7 @@ void Game::Block::setTexture(const std::string &texture)
 
 void Game::Block::setCoords(const sf::Vector2f &coords)
 {
-    _coords.x = coords.x;
-    _coords.y = coords.y;
+    _coords = coords;
     _sprite.setPosition(_coords);
 }
 
@@ -101,12 +101,10 @@ void Game::Block::draw(sf::RenderWindow &window)
 
 void Game::Block::update(float deltaTime, Game::Direction direction)
 {
-    sf::Vector2f coords;
-    coords.x = getCoords().x;
+    sf::Vector2f coords = getCoords();
     if (direction == Game::Direction::LEFT)
-        coords.x = getCoords().x + 280 * deltaTime;
+        coords.x += 280 * deltaTime;
     if (direction == Game::Direction::RIGHT)
-        coords.x = getCoords().x - 280 * deltaTime;
-    coords.y = getCoords().y;
+        coords.x -= 280 * deltaTime;
     setCoords(coords);
 }

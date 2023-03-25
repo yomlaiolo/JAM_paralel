@@ -38,6 +38,8 @@ static void add_layer(Game::Parallax &parallax, std::string path, float speed, i
 void Game::Core::Run()
 {
 
+    sf::Clock clock;
+
     add_layer(_parallax_p1, "assets/Parallax1-1.png", 0.8, 0, 0);
     add_layer(_parallax_p1, "assets/Parallax1-1.png", 0.8, 1920, 0);
     add_layer(_parallax_p1, "assets/Parallax1-2.png", 1.8, 0, 0);
@@ -63,14 +65,13 @@ void Game::Core::Run()
     while (_window.isOpen()) {
         _dtime = getDtime();
         sf::Event event;
-        _player1.setDirection(Direction::NONE);
-        _player2.setDirection(Direction::NONE);
         while (_window.pollEvent(event)) {
             if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
                 _window.close();
                 return;
             }
             if (event.type == sf::Event::KeyPressed) {
+                clock.restart();
                 switch (event.key.code) {
                     case sf::Keyboard::Z:
                         _pressed_z = true;
@@ -79,10 +80,14 @@ void Game::Core::Run()
                     case sf::Keyboard::Q:
                         _pressed_q = true;
                         _player1.setDirection(Direction::LEFT);
+                        _player1.setScale({-1, 1});
+                        _player1.setPosition({850 + _player1.getSize().x * 5, _player1.getPosition().y});
                         break;
                     case sf::Keyboard::D:
                         _pressed_d = true;
                         _player1.setDirection(Direction::RIGHT);
+                        _player1.setScale({1, 1});
+                        _player1.setPosition({850, 414});
                         break;
                     case sf::Keyboard::Up:
                         _pressed_up = true;
@@ -91,10 +96,14 @@ void Game::Core::Run()
                     case sf::Keyboard::Left:
                         _pressed_left = true;
                         _player2.setDirection(Direction::LEFT);
+                        _player2.setScale({-1, -1});
+                        _player2.setPosition({850 + _player2.getSize().x * 5, _player2.getPosition().y});
                         break;
                     case sf::Keyboard::Right:
                         _pressed_right = true;
                         _player2.setDirection(Direction::RIGHT);
+                        _player2.setScale({1, -1});
+                        _player2.setPosition({850, 674});
                         break;
                     default:
                         break;
@@ -131,32 +140,30 @@ void Game::Core::Run()
                 }
             }
         }
-        std::cout << "position :" << _player1.getDirection() << std::endl;
-        std::cout << "position :" << _player2.getDirection() << std::endl;
-        _window.clear();
-        _player1.getDirection();
-        _parallax_p1.update(_dtime, _player1.getDirection());
-        _parallax_p2.update(_dtime, _player2.getDirection());
-        _parallax_p1.draw(_window);
-        _parallax_p2.draw(_window);
-        //print all map block
-        for (std::size_t i = 0; i < map_player1.size(); i++) {
-            map_player1[i].update(_dtime, _player1.getDirection());
-            map_player1[i].draw(_window);
-        }
-        for (std::size_t i = 0; i < map_player2.size(); i++) {
-            map_player2[i].update(_dtime, Direction::NONE);
-            map_player2[i].draw(_window);
-        }
-        for (std::size_t i = 0; i < map_player3.size(); i++) {
-            map_player3[i].update(_dtime, _player2.getDirection());
-            map_player3[i].draw(_window);
-        }
-        _player1.update(_dtime);
-        _player2.update(_dtime);
-        _player1.draw(_window);
-        _player2.draw(_window);
-        _window.display();
+    _window.clear();
+    _player1.getDirection();
+    _parallax_p1.update(_dtime, _player1.getDirection());
+    _parallax_p2.update(_dtime, _player2.getDirection());
+    _parallax_p1.draw(_window);
+    _parallax_p2.draw(_window);
+    //print all map block
+    for (std::size_t i = 0; i < map_player1.size(); i++) {
+        map_player1[i].update(_dtime, _player1.getDirection());
+        map_player1[i].draw(_window);
+    }
+    for (std::size_t i = 0; i < map_player2.size(); i++) {
+        map_player2[i].update(_dtime, Direction::NONE);
+        map_player2[i].draw(_window);
+    }
+    for (std::size_t i = 0; i < map_player3.size(); i++) {
+        map_player3[i].update(_dtime, _player2.getDirection());
+        map_player3[i].draw(_window);
+    }
+    _player1.update(_dtime);
+    _player2.update(_dtime);
+    _player1.draw(_window);
+    _player2.draw(_window);
+    _window.display();
     }
 }
 
