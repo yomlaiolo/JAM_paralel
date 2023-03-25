@@ -54,6 +54,10 @@ void Game::Map::Parse()
         std::cout << "Unable to open file" << std::endl;
         exit(84);
     }
+    //print size of all vector
+    std::cout << "size player1: " << _map_player1.size() << std::endl;
+    std::cout << "size player2: " << _map_player2.size() << std::endl;
+    std::cout << "size player3: " << _map_player3.size() << std::endl;
 }
 
 std::vector<Game::Block> Game::Map::getMap_player1() const

@@ -62,6 +62,19 @@ void Game::Core::Run()
     map_player1 = _map.getMap_player1();
     map_player2 = _map.getMap_player2();
     map_player3 = _map.getMap_player3();
+    //IMPORTANT NE PAS SUPPRIMER LES STD::COUT
+    std::cout << "player 1:" << std::endl << _player1.getPosition().x << " " << _player1.getPosition().y << std::endl;
+    for (auto &i : map_player1) {
+        std::cout << "x: " << i.getCoords().x << " y: " << i.getCoords().y << std::endl;
+    }
+    std::cout << "sol:" << std::endl;
+    for (auto &i : map_player2) {
+        std::cout << "x: " << i.getCoords().x << " y: " << i.getCoords().y << std::endl;
+    }
+    std::cout << "player 2:" << std::endl << _player2.getPosition().x << " " << _player2.getPosition().y << std::endl;
+    for (auto &i : map_player3) {
+        std::cout << "x: " << i.getCoords().x << " y: " << i.getCoords().y << std::endl;
+    }
     while (_window.isOpen()) {
         _dtime = getDtime();
         sf::Event event;
