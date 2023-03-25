@@ -37,7 +37,7 @@ namespace Game {
             virtual void setSolid(bool isSolid) = 0;
             virtual void setEvent(const Game::Event &event) = 0;
             virtual void setSprite() = 0;
-            virtual std::pair <int, int> getCoords() const = 0;
+            virtual sf::Vector2f getCoords() const = 0;
             virtual std::pair <int, int> getSize() const = 0;
             virtual sf::Sprite getSprite() const = 0;
             virtual sf::Texture getTexture() const = 0;

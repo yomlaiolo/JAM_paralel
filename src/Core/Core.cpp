@@ -22,6 +22,7 @@ Game::Core::~Core()
 
 void Game::Core::Run()
 {
+    std::vector<Game::Block> map;
     while (_window.isOpen()) {
         _dtime = getDtime();
         sf::Event event;
@@ -30,6 +31,14 @@ void Game::Core::Run()
                 _window.close();
         }
         _window.clear();
+        //print all map block
+        map = _map.getMap();
+        for (int i = 0; i < map.size(); i++) {
+            std::cout << "draw " << i << std::endl;
+            std::cout << map[i].getSprite().getPosition().x << std::endl;
+            std::cout << map[i].getSprite().getPosition().y << std::endl;
+            map[i].draw(_window);
+        }
         _parallax.update(_window, _dtime);
         _window.display();
     }

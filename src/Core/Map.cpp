@@ -28,18 +28,15 @@ void Game::Map::Parse()
     std::ifstream file(_option);
     std::string line;
     int y = 0;
-    std::vector<std::vector<Game::Block>> map;
     
     if (file.is_open()) {
         while (getline(file, line)) {
             std::cout << line << std::endl;
-            std::vector<Game::Block> lineMap;
             for (int i = 0; i < line.length(); i++) {
                 if (line[i] == '#') {
-                    lineMap.push_back(Game::Block("assets/block.png", std::make_pair(i * 32, y * 32), std::make_pair(64, 64)));
+                    _map.push_back(Game::Block("assets/block.png", std::make_pair(i * 64, y * 64), std::make_pair(64, 64)));
                 }
             }
-            map.push_back(lineMap);
             y += 1;
         }
         file.close();
@@ -51,6 +48,7 @@ void Game::Map::Parse()
             std::cout << "Map don't have 17 lines" << std::endl;
             exit(84);
         }
+        
     }
 }
 

@@ -20,7 +20,7 @@ namespace Game {
             void setSolid(bool isSolid);
             void setEvent(const Game::Event &event);
             void setSprite();
-            std::pair<int, int> getCoords() const;
+            sf::Vector2f getCoords() const;
             std::pair<int, int> getSize() const;
             sf::Sprite getSprite() const;
             sf::Texture getTexture() const;
@@ -30,7 +30,7 @@ namespace Game {
             void draw(sf::RenderWindow &window);
         protected:
         private:
-            std::pair<int, int> _coords;
+            sf::Vector2f _coords;
             std::pair<int, int> _size;
             sf::Sprite _sprite;
             sf::Texture _texture;
