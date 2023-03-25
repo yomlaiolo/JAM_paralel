@@ -22,7 +22,8 @@ namespace Game {
         float getDtime();
     protected:
     private:
-        Parallax _parallax;
+        Parallax _parallax_p1;
+        Parallax _parallax_p2;
         Player _player1;
         Player _player2;
         Map _map;

@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include "Player.hpp"
+
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
@@ -17,15 +19,13 @@ namespace Game {
         public:
             Parallax();
             ~Parallax();
-            void addLayer(sf::Sprite sprite, sf::Texture texture, std::pair<int, int> positions, float speed);
-            void update(sf::RenderWindow &window, float deltaTime);
+            void addLayer(sf::Sprite sprite, float speed);
+            void update(sf::RenderWindow &window, float deltaTime, Game::Direction direction);
             void draw(sf::RenderWindow &window);
         protected:
         private:
             sf::RenderWindow _window;
             std::vector<sf::Sprite> _sprites;
-            std::vector<sf::Texture> _textures;
-            std::vector<std::pair<int, int>> _positions;
             std::vector<float> _speeds;
     };
 }
