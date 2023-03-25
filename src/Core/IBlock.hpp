@@ -27,6 +27,7 @@ namespace Game {
         PLAYER,
         EXIT
     };
+    
     class IBlock {
         public:
             virtual ~IBlock() = default;
