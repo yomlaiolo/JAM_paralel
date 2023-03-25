@@ -7,6 +7,10 @@
 
 #pragma once
 
+#include "Parallax.hpp"
+#include "Player.hpp"
+#include "Map.hpp"
+
 #include <iostream>
 
 namespace Game {

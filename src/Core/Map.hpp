@@ -17,7 +17,7 @@ namespace Game {
         public:
             Map(std::string option);
             ~Map();
-            Parse();
+            void Parse();
         protected:
         private:
             std::string _option;

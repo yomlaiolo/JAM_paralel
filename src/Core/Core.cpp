@@ -7,11 +7,9 @@
 
 #include "Core.hpp"
 
-Game::Core::Core(std::string option)
+Game::Core::Core(std::string option) : _map("uwu")
 {
-    _player = new Player();
-    _map = new Map(option);
-    _parallax = new Parallax();
+
 }
 
 Game::Core::~Core()
