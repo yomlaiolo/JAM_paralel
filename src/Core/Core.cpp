@@ -53,8 +53,10 @@ void Game::Core::Run()
 
     _window.setFramerateLimit(60);
     _player2.setScale({1, -1});
-    std::vector<Game::Block> map;
-    map = _map.getMap();
+    std::vector<Game::Block> map_player1;
+    std::vector<Game::Block> map_player2;
+    map_player1 = _map.getMap_player1();
+    map_player2 = _map.getMap_player2();
     while (_window.isOpen()) {
         _dtime = getDtime();
         sf::Event event;
@@ -72,9 +74,14 @@ void Game::Core::Run()
         _parallax_p2.update(_dtime, Direction::LEFT);
         _parallax_p1.draw(_window);
         _parallax_p2.draw(_window);
-        for (auto &block : map) {
-            block.update(_dtime, Direction::RIGHT);
-            block.draw(_window);
+        //print all map block
+        for (std::size_t i = 0; i < map_player1.size(); i++) {
+            map_player1[i].update(_dtime, Direction::RIGHT);
+            map_player1[i].draw(_window);
+        }
+        for (std::size_t i = 0; i < map_player2.size(); i++) {
+            map_player2[i].update(_dtime, Direction::RIGHT);
+            map_player2[i].draw(_window);
         }
         _player1.update(_dtime);
         _player2.update(_dtime);

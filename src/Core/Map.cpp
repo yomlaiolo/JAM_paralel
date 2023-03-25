@@ -31,7 +31,10 @@ void Game::Map::Parse()
         while (getline(file, line)) {
             for (int i = 0; i < (int)line.length(); i++) {
                 if (line[i] == '#') {
-                    _map.push_back(Game::Block("assets/block.png", {(float)(i * 64), (float)(y * 64)}, {64, 64}));
+                    if (y < 8)
+                        _map_player1.push_back(Game::Block("assets/block.png", {(float)(i * 64), (float)(y * 64)}, {64, 64}));
+                    else
+                        _map_player2.push_back(Game::Block("assets/block.png", {(float)(i * 64), (float)(y * 64)}, {64, 64}));
                 }
             }
             y += 1;
@@ -51,7 +54,12 @@ void Game::Map::Parse()
     }
 }
 
-std::vector<Game::Block> Game::Map::getMap() const
+std::vector<Game::Block> Game::Map::getMap_player1() const
 {
-    return _map;
+    return _map_player1;
+}
+
+std::vector<Game::Block> Game::Map::getMap_player2() const
+{
+    return _map_player2;
 }
