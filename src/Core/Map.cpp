@@ -23,8 +23,6 @@ Game::Map::~Map()
 
 void Game::Map::Parse()
 {
-    std::cout << "Parsing map" << std::endl;
-
     std::ifstream file(_option);
     std::string line;
     int y = 0;
@@ -32,7 +30,7 @@ void Game::Map::Parse()
     if (file.is_open()) {
         while (getline(file, line)) {
             std::cout << line << std::endl;
-            for (int i = 0; i < line.length(); i++) {
+            for (int i = 0; i < (int)line.length(); i++) {
                 if (line[i] == '#') {
                     if (y < 8)
                         _map_player1.push_back(Game::Block("assets/block.png", std::make_pair(i * 64, y * 64), std::make_pair(64, 64)));
@@ -51,7 +49,9 @@ void Game::Map::Parse()
             std::cout << "Map don't have 17 lines" << std::endl;
             exit(84);
         }
-        
+    } else {
+        std::cout << "Unable to open file" << std::endl;
+        exit(84);
     }
 }
 
