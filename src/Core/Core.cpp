@@ -130,15 +130,15 @@ void Game::Core::Run()
         _parallax_p1.draw(_window);
         _parallax_p2.draw(_window);
         //print all map block
-        for (int i = 0; i < (int)map_player1.size(); i++) {
+        for (std::size_t i = 0; i < map_player1.size(); i++) {
             map_player1[i].update(_dtime, _player1.getDirection());
             map_player1[i].draw(_window);
         }
-        for (int i = 0; i < (int)map_player2.size(); i++) {
+        for (std::size_t i = 0; i < map_player2.size(); i++) {
             map_player2[i].update(_dtime, Direction::NONE);
             map_player2[i].draw(_window);
         }
-        for (int i = 0; i < (int)map_player3.size(); i++) {
+        for (std::size_t i = 0; i < map_player3.size(); i++) {
             map_player3[i].update(_dtime, _player2.getDirection());
             map_player3[i].draw(_window);
         }

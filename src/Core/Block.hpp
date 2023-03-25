@@ -13,16 +13,16 @@
 namespace Game {
     class Block : public Game::IBlock {
         public:
-            Block(const std::string &texture, const std::pair<int, int> &coords, const std::pair <int, int> &size);
+            Block(const std::string &texture, const sf::Vector2f &coords, const sf::Vector2f &size);
             ~Block();
             void setTexture(const std::string &texture);
-            void setCoords(const std::pair<int, int> &coords);
-            void setSize(const std::pair <int, int> &size);
+            void setCoords(const sf::Vector2f &coords);
+            void setSize(const sf::Vector2f &size);
             void setSolid(bool isSolid);
             void setEvent(const Game::Event &event);
             void setSprite();
             sf::Vector2f getCoords() const;
-            std::pair<int, int> getSize() const;
+            sf::Vector2f getSize() const;
             sf::Sprite getSprite() const;
             sf::Texture getTexture() const;
             bool isSolid() const;
@@ -33,7 +33,7 @@ namespace Game {
         protected:
         private:
             sf::Vector2f _coords;
-            std::pair<int, int> _size;
+            sf::Vector2f _size;
             sf::Sprite _sprite;
             sf::Texture _texture;
             bool _isSolid;
