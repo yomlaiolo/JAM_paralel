@@ -71,58 +71,68 @@ void Game::Core::Run()
                 return;
             }
             if (event.type == sf::Event::KeyPressed) {
-                if (event.key.code == sf::Keyboard::Z) {
-                    pressed_z = true;
-                    _player1.setDirection(Direction::UP);
-                }
-                if (event.key.code == sf::Keyboard::Q) {
-                    pressed_q = true;
-                    _player1.setDirection(Direction::LEFT);
-                }
-                if (event.key.code == sf::Keyboard::D) {
-                    pressed_d = true;
-                    _player1.setDirection(Direction::RIGHT);
-                }
-                if (event.key.code == sf::Keyboard::Up) {
-                    pressed_up = true;
-                    _player2.setDirection(Direction::UP);
-                }
-                if (event.key.code == sf::Keyboard::Left) {
-                    pressed_left = true;
-                    _player2.setDirection(Direction::LEFT);
-                }
-                if (event.key.code == sf::Keyboard::Right) {
-                    pressed_right = true;
-                    _player2.setDirection(Direction::RIGHT);
+                switch (event.key.code) {
+                    case sf::Keyboard::Z:
+                        _pressed_z = true;
+                        _player1.setDirection(Direction::UP);
+                        break;
+                    case sf::Keyboard::Q:
+                        _pressed_q = true;
+                        _player1.setDirection(Direction::LEFT);
+                        break;
+                    case sf::Keyboard::D:
+                        _pressed_d = true;
+                        _player1.setDirection(Direction::RIGHT);
+                        break;
+                    case sf::Keyboard::Up:
+                        _pressed_up = true;
+                        _player2.setDirection(Direction::UP);
+                        break;
+                    case sf::Keyboard::Left:
+                        _pressed_left = true;
+                        _player2.setDirection(Direction::LEFT);
+                        break;
+                    case sf::Keyboard::Right:
+                        _pressed_right = true;
+                        _player2.setDirection(Direction::RIGHT);
+                        break;
+                    default:
+                        break;
                 }
             }
             if (event.type == sf::Event::KeyReleased) {
-                if (event.key.code == sf::Keyboard::Z) {
-                    pressed_z = false;
-                    _player1.setDirection(Direction::UP);
-                }
-                if (event.key.code == sf::Keyboard::Q) {
-                    pressed_q = false;
-                    _player1.setDirection(Direction::LEFT);
-                }
-                if (event.key.code == sf::Keyboard::D) {
-                    pressed_d = false;
-                    _player1.setDirection(Direction::RIGHT);
-                }
-                if (event.key.code == sf::Keyboard::Up) {
-                    pressed_up = false;
-                    _player2.setDirection(Direction::UP);
-                }
-                if (event.key.code == sf::Keyboard::Left) {
-                    pressed_left = false;
-                    _player2.setDirection(Direction::LEFT);
-                }
-                if (event.key.code == sf::Keyboard::Right) {
-                    pressed_right = false;
-                    _player2.setDirection(Direction::RIGHT);
+                switch (event.key.code) {
+                    case sf::Keyboard::Z:
+                        _pressed_z = false;
+                        _player1.setDirection(Direction::NONE);
+                        break;
+                    case sf::Keyboard::Q:
+                        _pressed_q = false;
+                        _player1.setDirection(Direction::NONE);
+                        break;
+                    case sf::Keyboard::D:
+                        _pressed_d = false;
+                        _player1.setDirection(Direction::NONE);
+                        break;
+                    case sf::Keyboard::Up:
+                        _pressed_up = false;
+                        _player2.setDirection(Direction::NONE);
+                        break;
+                    case sf::Keyboard::Left:
+                        _pressed_left = false;
+                        _player2.setDirection(Direction::NONE);
+                        break;
+                    case sf::Keyboard::Right:
+                        _pressed_right = false;
+                        _player2.setDirection(Direction::NONE);
+                        break;
+                    default:
+                        break;
                 }
             }
         }
+        std::cout << "position :" << _player1.getDirection() << std::endl;
+        std::cout << "position :" << _player2.getDirection() << std::endl;
         _window.clear();
         _player1.getDirection();
         _parallax_p1.update(_dtime, _player1.getDirection());
