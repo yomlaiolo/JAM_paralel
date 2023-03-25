@@ -7,13 +7,12 @@
 
 #include "Core.hpp"
 
-Game::Core::Core(std::string option) : _parallax_p1(), _parallax_p2(), _player1("assets/player1.png"), _player2("assets/player2.png"), _map("test.txt"), _window(sf::VideoMode(1920, 1080), "JAM_paralel"), _clock(), _time()
+Game::Core::Core(std::string option) : _parallax_p1(), _parallax_p2(), _player1("assets/player1.png", {850, 414}), _player2("assets/player2.png", {850, 674}), _map(option), _window(sf::VideoMode(1920, 1080), "JAM_paralel"), _clock(), _time()
 {
+    _map.Parse();
     _dtime = 0;
     _clock.restart();
     _time = _clock.getElapsedTime();
-    _map.Parse();
-    option = option;
 }
 
 Game::Core::~Core()
@@ -53,14 +52,17 @@ void Game::Core::Run()
     add_layer(_parallax_p2, "assets/Parallax1-3.png", 2.8, 1920, 1080, true);
 
     _window.setFramerateLimit(60);
+    _player2.setScale({1, -1});
     std::vector<Game::Block> map;
     map = _map.getMap();
     while (_window.isOpen()) {
         _dtime = getDtime();
         sf::Event event;
         while (_window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
+            if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
                 _window.close();
+                return;
+            }
         }
         _window.clear();
         _player1.getDirection();
@@ -73,11 +75,12 @@ void Game::Core::Run()
         //print all map block
         for (int i = 0; i < (int)map.size(); i++) {
             map[i].update(_dtime, Direction::RIGHT);
-            std::cout << "draw " << i << std::endl;
-            std::cout << map[i].getSprite().getPosition().x << std::endl;
-            std::cout << map[i].getSprite().getPosition().y << std::endl;
             map[i].draw(_window);
         }
+        _player1.update(_dtime);
+        _player2.update(_dtime);
+        _player1.draw(_window);
+        _player2.draw(_window);
         _window.display();
     }
 }

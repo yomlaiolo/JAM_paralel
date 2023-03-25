@@ -23,8 +23,6 @@ Game::Map::~Map()
 
 void Game::Map::Parse()
 {
-    std::cout << "Parsing map" << std::endl;
-
     std::ifstream file(_option);
     std::string line;
     int y = 0;
@@ -48,7 +46,9 @@ void Game::Map::Parse()
             std::cout << "Map don't have 17 lines" << std::endl;
             exit(84);
         }
-        
+    } else {
+        std::cout << "Unable to open file" << std::endl;
+        exit(84);
     }
 }
 

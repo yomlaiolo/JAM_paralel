@@ -7,16 +7,20 @@
 
 #include "Player.hpp"
 
-Game::Player::Player(const std::string &texture)
+Game::Player::Player(const std::string &texture, sf::Vector2f pos)
 {
     _texture = sf::Texture();
     _texture.loadFromFile(texture);
     _sprite = sf::Sprite();
     _sprite.setTexture(_texture);
-    _position = std::pair<int, int>(0, 0);
-    _size = std::pair<int, int>(0, 0);
+    _position = pos;
+    _size = {20, 53};
     _speed = 0;
     _direction = Direction::NONE;
+    this->setPosition(pos);
+    _anim_x = 0;
+    _anim_y = 0;
+    _time = 0;
 }
 
 Game::Player::~Player()
@@ -27,34 +31,46 @@ Game::Player::~Player()
 void Game::Player::move(Direction direction, float dtime)
 {
     if (direction == Direction::UP)
-        _position.second -= _speed * dtime;
+        _position.y -= _speed * dtime;
     if (direction == Direction::DOWN)
-        _position.second += _speed * dtime;
+        _position.y += _speed * dtime;
     if (direction == Direction::LEFT)
-        _position.first -= _speed * dtime;
+        _position.x -= _speed * dtime;
     if (direction == Direction::RIGHT)
-        _position.first += _speed * dtime;
+        _position.x += _speed * dtime;
 }
 
-void Game::Player::update()
+void Game::Player::update(const float &dtime)
 {
+    _time += dtime;
+    if (_time > 0.2) {
+        _time = 0;
+        _sprite.setTextureRect(sf::IntRect(102 * _anim_x, 98 * _anim_y, 102, 98));
+        _anim_x++;
+        if (_anim_x > 5) {
+            _anim_x = 0;
+            if (_anim_y == 0)
+                _anim_y = 1;
+            else
+                _anim_y = 0;
+        }
+    }
 }
 
 void Game::Player::draw(sf::RenderWindow &window)
 {
-
+    _sprite.setPosition(_position.x, _position.y);
+    window.draw(_sprite);
 }
 
-void Game::Player::setPosition(std::pair<int, int> position)
+void Game::Player::setPosition(sf::Vector2f position)
 {
-    _position.first = position.first;
-    _position.second = position.second;
+    _position = position;
 }
 
-void Game::Player::setSize(std::pair<int, int> size)
+void Game::Player::setSize(sf::Vector2f size)
 {
-    _size.first = size.first;
-    _size.second = size.second;
+    _size = size;
 }
 
 void Game::Player::setSpeed(int speed)
@@ -67,12 +83,17 @@ void Game::Player::setDirection(Direction direction)
     _direction = direction;
 }
 
-std::pair<int, int> Game::Player::getPosition()
+void Game::Player::setScale(sf::Vector2f scale)
+{
+    _sprite.setScale(scale);
+}
+
+sf::Vector2f Game::Player::getPosition()
 {
     return _position;
 }
 
-std::pair<int, int> Game::Player::getSize()
+sf::Vector2f Game::Player::getSize()
 {
     return _size;
 }
