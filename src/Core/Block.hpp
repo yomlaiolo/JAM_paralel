@@ -27,6 +27,7 @@ namespace Game {
             bool isSolid() const;
             bool isEvent() const;
             Game::Event getEvent() const;
+            void draw(sf::RenderWindow &window);
         protected:
         private:
             std::pair<int, int> _coords;

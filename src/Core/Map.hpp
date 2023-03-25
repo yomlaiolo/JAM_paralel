@@ -18,10 +18,11 @@ namespace Game {
             Map(std::string option);
             ~Map();
             void Parse();
+            std::vector<Game::Block> getMap() const;
         protected:
         private:
             std::string _option;
-            std::vector<std::vector<Game::Block>> _map;
+            std::vector<Game::Block> _map;
             
     };
 }

@@ -88,3 +88,7 @@ Game::Event Game::Block::getEvent() const
     return _event;
 }
 
+void Game::Block::draw(sf::RenderWindow &window)
+{
+    window.draw(_sprite);
+}

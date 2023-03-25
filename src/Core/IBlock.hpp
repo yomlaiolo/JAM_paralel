@@ -31,11 +31,11 @@ namespace Game {
     class IBlock {
         public:
             virtual ~IBlock() = default;
-            virtual void setTexture(std::string texture) = 0;
-            virtual void setCoords(std::pair <int, int> coords) = 0;
-            virtual void setSize(std::pair <int, int> size) = 0;
+            virtual void setTexture(const std::string &texture) = 0;
+            virtual void setCoords(const std::pair <int, int> &coords) = 0;
+            virtual void setSize(const std::pair <int, int> &size) = 0;
             virtual void setSolid(bool isSolid) = 0;
-            virtual void setEvent(Game::Event event) = 0;
+            virtual void setEvent(const Game::Event &event) = 0;
             virtual void setSprite() = 0;
             virtual std::pair <int, int> getCoords() const = 0;
             virtual std::pair <int, int> getSize() const = 0;
@@ -44,6 +44,7 @@ namespace Game {
             virtual bool isSolid() const = 0;
             virtual bool isEvent() const = 0;
             virtual Game::Event getEvent() const = 0;
+            virtual void draw(sf::RenderWindow &window) = 0;
         protected:
         private:
     };

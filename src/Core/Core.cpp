@@ -7,11 +7,12 @@
 
 #include "Core.hpp"
 
-Game::Core::Core(std::string option) : _parallax(), _player1("assets/player1.png"), _player2("assets/player2.png"), _map("uwu"), _window(sf::VideoMode(1920, 1080), "JAM_paralel"), _clock(), _time()
+Game::Core::Core(std::string option) : _parallax(), _player1("assets/player1.png"), _player2("assets/player2.png"), _map("test.txt"), _window(sf::VideoMode(1920, 1080), "JAM_paralel"), _clock(), _time()
 {
     _dtime = 0;
     _clock.restart();
     _time = _clock.getElapsedTime();
+    _map.Parse();
 }
 
 Game::Core::~Core()
