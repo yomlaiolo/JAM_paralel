@@ -8,6 +8,7 @@
 #pragma once
 
 #include "IBlock.hpp"
+#include "Player.hpp"
 
 namespace Game {
     class Block : public Game::IBlock {
@@ -27,6 +28,7 @@ namespace Game {
             bool isSolid() const;
             bool isEvent() const;
             Game::Event getEvent() const;
+            void update(float deltaTime, Game::Direction direction);
             void draw(sf::RenderWindow &window);
         protected:
         private:

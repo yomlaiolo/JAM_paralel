@@ -11,6 +11,7 @@
 #include <vector>
 #include <string>
 #include "Block.hpp"
+#include "Player.hpp"
 
 namespace Game {
     class Map {
