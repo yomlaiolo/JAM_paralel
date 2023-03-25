@@ -38,6 +38,8 @@ static void add_layer(Game::Parallax &parallax, std::string path, float speed, i
 void Game::Core::Run()
 {
 
+    sf::Clock clock;
+
     add_layer(_parallax_p1, "assets/Parallax1-1.png", 0.8, 0, 0);
     add_layer(_parallax_p1, "assets/Parallax1-1.png", 0.8, 1920, 0);
     add_layer(_parallax_p1, "assets/Parallax1-2.png", 1.8, 0, 0);
@@ -63,14 +65,22 @@ void Game::Core::Run()
     while (_window.isOpen()) {
         _dtime = getDtime();
         sf::Event event;
-        _player1.setDirection(Direction::NONE);
-        _player2.setDirection(Direction::NONE);
+        if (clock.getElapsedTime() > sf::milliseconds(300)) {
+            _player1.setDirection(Direction::NONE);
+            _player2.setDirection(Direction::NONE);
+            _player1.setScale({1, 1});
+            _player2.setScale({1, -1});
+            _player1.setPosition({850, 414});
+            _player2.setPosition({850, 674});
+            clock.restart();
+        }
         while (_window.pollEvent(event)) {
             if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
                 _window.close();
                 return;
             }
             if (event.type == sf::Event::KeyPressed) {
+                clock.restart();
                 if (event.key.code == sf::Keyboard::Z) {
                     pressed_z = true;
                     _player1.setDirection(Direction::UP);
@@ -78,10 +88,14 @@ void Game::Core::Run()
                 if (event.key.code == sf::Keyboard::Q) {
                     pressed_q = true;
                     _player1.setDirection(Direction::LEFT);
+                    _player1.setScale({-1, 1});
+                    _player1.setPosition({850 + _player1.getSize().x * 5, _player1.getPosition().y});
                 }
                 if (event.key.code == sf::Keyboard::D) {
                     pressed_d = true;
                     _player1.setDirection(Direction::RIGHT);
+                    _player1.setScale({1, 1});
+                    _player1.setPosition({850, 414});
                 }
                 if (event.key.code == sf::Keyboard::Up) {
                     pressed_up = true;
@@ -90,10 +104,14 @@ void Game::Core::Run()
                 if (event.key.code == sf::Keyboard::Left) {
                     pressed_left = true;
                     _player2.setDirection(Direction::LEFT);
+                    _player2.setScale({-1, -1});
+                    _player2.setPosition({850 + _player2.getSize().x * 5, _player2.getPosition().y});
                 }
                 if (event.key.code == sf::Keyboard::Right) {
                     pressed_right = true;
                     _player2.setDirection(Direction::RIGHT);
+                    _player2.setScale({1, -1});
+                    _player2.setPosition({850, 674});
                 }
             }
             if (event.type == sf::Event::KeyReleased) {
