@@ -10,8 +10,9 @@
 #include <SFML/System.hpp>
 
 #include <iostream>
+#include "Core.hpp"
 
 int main(int ac, char **av)
 {
-    std::cout << "Hello World" << std::endl;
+    
 }
