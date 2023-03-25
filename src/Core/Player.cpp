@@ -7,9 +7,12 @@
 
 #include "Player.hpp"
 
-Game::Player::Player()
+Game::Player::Player(const std::string &texture)
 {
+    _texture = sf::Texture();
+    _texture.loadFromFile(texture);
     _sprite = sf::Sprite();
+    _sprite.setTexture(_texture);
     _position = std::pair<int, int>(0, 0);
     _size = std::pair<int, int>(0, 0);
     _speed = 0;
@@ -21,21 +24,20 @@ Game::Player::~Player()
 
 }
 
-void Game::Player::move(Direction direction)
+void Game::Player::move(Direction direction, float dtime)
 {
     if (direction == Direction::UP)
-        _position.second -= _speed;
+        _position.second -= _speed * dtime;
     if (direction == Direction::DOWN)
-        _position.second += _speed;
+        _position.second += _speed * dtime;
     if (direction == Direction::LEFT)
-        _position.first -= _speed;
+        _position.first -= _speed * dtime;
     if (direction == Direction::RIGHT)
-        _position.first += _speed;
+        _position.first += _speed * dtime;
 }
 
 void Game::Player::update()
 {
-
 }
 
 void Game::Player::draw(sf::RenderWindow &window)

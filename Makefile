@@ -7,7 +7,10 @@
 
 FILES	=	main.cpp \
 			Core/Block.cpp \
-			Core/Core.cpp
+			Core/Player.cpp \
+			Core/Core.cpp \
+			Core/Map.cpp \
+			Core/Parallax.cpp \
 
 SRC		=	$(FILES:%=src/%)
 

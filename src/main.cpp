@@ -5,14 +5,13 @@
 ** main
 */
 
-#include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/System.hpp>
-
-#include <iostream>
 #include "Core.hpp"
 
 int main(int ac, char **av)
 {
-    
+    if (ac != 2)
+        return 84;
+    Game::Core core(av[1]);
+    core.Run();
+    return 0;
 }
