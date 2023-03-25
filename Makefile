@@ -6,21 +6,25 @@
 ##
 
 FILES	=	main.cpp \
+			Core/Block.cpp \
 
 SRC		=	$(FILES:%=src/%)
 
 OBJ		=	$(SRC:.cpp=.o)
 
+%.o: %.cpp
+	$(CC) -c -o $@ $< $(CFLAGS)
+
 NAME	=	DoubleVision
 
-CFLAGS	=	-Wall -Wextra -I./include -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -ljsoncpp
+CFLAGS	=	-Wall -Wextra -I./include -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 CC = g++
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) -o $(NAME) $(OBJ)
+	$(CC) -o $(NAME) $(OBJ) $(CFLAGS)
 
 clean:
 	rm -f $(OBJ)
