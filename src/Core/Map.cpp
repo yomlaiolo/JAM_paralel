@@ -29,10 +29,9 @@ void Game::Map::Parse()
     
     if (file.is_open()) {
         while (getline(file, line)) {
-            std::cout << line << std::endl;
             for (int i = 0; i < (int)line.length(); i++) {
                 if (line[i] == '#') {
-                    _map.push_back(Game::Block("./assets/block.png", std::make_pair(i * 64, y * 64), std::make_pair(64, 64)));
+                    _map.push_back(Game::Block("assets/block.png", {(float)(i * 64), (float)(y * 64)}, {64, 64}));
                 }
             }
             y += 1;

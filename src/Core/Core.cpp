@@ -72,10 +72,9 @@ void Game::Core::Run()
         _parallax_p2.update(_dtime, Direction::LEFT);
         _parallax_p1.draw(_window);
         _parallax_p2.draw(_window);
-        //print all map block
-        for (int i = 0; i < (int)map.size(); i++) {
-            map[i].update(_dtime, Direction::RIGHT);
-            map[i].draw(_window);
+        for (auto &block : map) {
+            block.update(_dtime, Direction::RIGHT);
+            block.draw(_window);
         }
         _player1.update(_dtime);
         _player2.update(_dtime);

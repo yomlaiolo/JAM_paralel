@@ -32,13 +32,13 @@ namespace Game {
         public:
             virtual ~IBlock() = default;
             virtual void setTexture(const std::string &texture) = 0;
-            virtual void setCoords(const std::pair <int, int> &coords) = 0;
-            virtual void setSize(const std::pair <int, int> &size) = 0;
+            virtual void setCoords(const sf::Vector2f &coords) = 0;
+            virtual void setSize(const sf::Vector2f &size) = 0;
             virtual void setSolid(bool isSolid) = 0;
             virtual void setEvent(const Game::Event &event) = 0;
             virtual void setSprite() = 0;
             virtual sf::Vector2f getCoords() const = 0;
-            virtual std::pair <int, int> getSize() const = 0;
+            virtual sf::Vector2f getSize() const = 0;
             virtual sf::Sprite getSprite() const = 0;
             virtual sf::Texture getTexture() const = 0;
             virtual bool isSolid() const = 0;

@@ -7,16 +7,15 @@
 
 #include "Block.hpp"
 
-Game::Block::Block(const std::string &texture, const std::pair<int, int> &coords, const std::pair<int, int> &size)
+Game::Block::Block(const std::string &texture, const sf::Vector2f &coords, const sf::Vector2f &size)
 {
     _sprite = sf::Sprite();
     _texture = sf::Texture();
-    _coords.x = coords.first;
-    _coords.y = coords.second;
+    _coords = coords;
     _size = size;
     _texture.loadFromFile(texture);
     _sprite.setTexture(_texture);
-    _sprite.setTextureRect(sf::IntRect(0, 0, _size.first, _size.second));
+    _sprite.setTextureRect(sf::IntRect(0, 0, _size.x, _size.y));
     _isSolid = false;
     _isEvent = false;
     _event = Game::Event::NO;
@@ -32,14 +31,14 @@ void Game::Block::setTexture(const std::string &texture)
     _texture.loadFromFile(texture);
 }
 
-void Game::Block::setCoords(const std::pair <int, int> &coords)
+void Game::Block::setCoords(const sf::Vector2f &coords)
 {
-    _coords.x = coords.first;
-    _coords.y = coords.second;
+    _coords.x = coords.x;
+    _coords.y = coords.y;
     _sprite.setPosition(_coords);
 }
 
-void Game::Block::setSize(const std::pair <int, int> &size)
+void Game::Block::setSize(const sf::Vector2f &size)
 {
     _size = size;
 }
@@ -65,7 +64,7 @@ sf::Vector2f Game::Block::getCoords() const
     return _coords;
 }
 
-std::pair<int, int> Game::Block::getSize() const
+sf::Vector2f Game::Block::getSize() const
 {
     return _size;
 }
@@ -102,11 +101,11 @@ void Game::Block::draw(sf::RenderWindow &window)
 
 void Game::Block::update(float deltaTime, Game::Direction direction)
 {
-    std::pair<int, int> coords;
+    sf::Vector2f coords;
     if (direction == Game::Direction::LEFT)
-        coords.first = getCoords().x + 280 * deltaTime;
+        coords.x = getCoords().x + 280 * deltaTime;
     if (direction == Game::Direction::RIGHT)
-        coords.first = getCoords().x - 280 * deltaTime;
-    coords.second = getCoords().y;
+        coords.x = getCoords().x - 280 * deltaTime;
+    coords.y = getCoords().y;
     setCoords(coords);
 }
