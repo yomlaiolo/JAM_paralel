@@ -24,6 +24,7 @@ void Game::Core::Run()
 {
     _player2.setScale({1, -1});
     std::vector<Game::Block> map;
+    map = _map.getMap();
     while (_window.isOpen()) {
         _dtime = getDtime();
         sf::Event event;
@@ -34,7 +35,6 @@ void Game::Core::Run()
             }
         }
         _window.clear();
-        map = _map.getMap();
         for (std::size_t i = 0; i < map.size(); i++)
             map[i].draw(_window);
         _parallax.update(_window, _dtime);
