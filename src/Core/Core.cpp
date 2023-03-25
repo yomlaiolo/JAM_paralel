@@ -7,11 +7,13 @@
 
 #include "Core.hpp"
 
-Game::Core::Core(std::string option) : _parallax_p1(), _parallax_p2(), _player1("assets/player1.png"), _player2("assets/player2.png"), _map("uwu"), _window(sf::VideoMode(1920, 1080), "JAM_paralel"), _clock(), _time()
+Game::Core::Core(std::string option) : _parallax_p1(), _parallax_p2(), _player1("assets/player1.png"), _player2("assets/player2.png"), _map("test.txt"), _window(sf::VideoMode(1920, 1080), "JAM_paralel"), _clock(), _time()
 {
     _dtime = 0;
     _clock.restart();
     _time = _clock.getElapsedTime();
+    _map.Parse();
+    option = option;
 }
 
 Game::Core::~Core()
@@ -43,7 +45,6 @@ void Game::Core::Run()
     add_layer(_parallax_p1, "assets/Parallax1-3.png", 2.8, 0, 0);
     add_layer(_parallax_p1, "assets/Parallax1-3.png", 2.8, 1920, 0);
 
-
     add_layer(_parallax_p2, "assets/Parallax1-1.png", 0.8, 0, 1080, true);
     add_layer(_parallax_p2, "assets/Parallax1-1.png", 0.8, 1920, 1080, true);
     add_layer(_parallax_p2, "assets/Parallax1-2.png", 1.8, 0, 1080, true);
@@ -52,6 +53,8 @@ void Game::Core::Run()
     add_layer(_parallax_p2, "assets/Parallax1-3.png", 2.8, 1920, 1080, true);
 
     _window.setFramerateLimit(60);
+    std::vector<Game::Block> map;
+    map = _map.getMap();
     while (_window.isOpen()) {
         _dtime = getDtime();
         sf::Event event;
@@ -63,10 +66,18 @@ void Game::Core::Run()
         _player1.getDirection();
         //_parallax_p1.update(_window, _dtime, _player1.getDirection());
         //_parallax_p2.update(_window, _dtime, _player2.getDirection());
-        _parallax_p1.update(_window, _dtime, Direction::RIGHT);
-        _parallax_p2.update(_window, _dtime, Direction::LEFT);
+        _parallax_p1.update(_dtime, Direction::RIGHT);
+        _parallax_p2.update(_dtime, Direction::LEFT);
         _parallax_p1.draw(_window);
         _parallax_p2.draw(_window);
+        //print all map block
+        for (int i = 0; i < (int)map.size(); i++) {
+            map[i].update(_dtime, Direction::RIGHT);
+            std::cout << "draw " << i << std::endl;
+            std::cout << map[i].getSprite().getPosition().x << std::endl;
+            std::cout << map[i].getSprite().getPosition().y << std::endl;
+            map[i].draw(_window);
+        }
         _window.display();
     }
 }

@@ -24,7 +24,7 @@ void Game::Parallax::addLayer(sf::Sprite sprite, float speed)
     _speeds.push_back(speed);
 }
 
-void Game::Parallax::update(sf::RenderWindow &window, float deltaTime, Game::Direction direction)
+void Game::Parallax::update(float deltaTime, Game::Direction direction)
 {
     float x;
     for (std::size_t i = 0; i < _sprites.size(); i++) {
@@ -42,7 +42,7 @@ void Game::Parallax::update(sf::RenderWindow &window, float deltaTime, Game::Dir
 
 void Game::Parallax::draw(sf::RenderWindow &window)
 {
-    for (int i = 0; i < _sprites.size(); i++) {
+    for (int i = 0; i < (int)_sprites.size(); i++) {
         window.draw(_sprites[i]);
     }
 }

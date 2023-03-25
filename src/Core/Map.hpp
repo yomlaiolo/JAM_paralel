@@ -11,6 +11,7 @@
 #include <vector>
 #include <string>
 #include "Block.hpp"
+#include "Player.hpp"
 
 namespace Game {
     class Map {
@@ -18,10 +19,11 @@ namespace Game {
             Map(std::string option);
             ~Map();
             void Parse();
+            std::vector<Game::Block> getMap() const;
         protected:
         private:
             std::string _option;
-            std::vector<std::vector<Game::Block>> _map;
+            std::vector<Game::Block> _map;
             
     };
 }

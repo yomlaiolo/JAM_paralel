@@ -20,7 +20,7 @@ namespace Game {
             Parallax();
             ~Parallax();
             void addLayer(sf::Sprite sprite, float speed);
-            void update(sf::RenderWindow &window, float deltaTime, Game::Direction direction);
+            void update(float deltaTime, Game::Direction direction);
             void draw(sf::RenderWindow &window);
         protected:
         private:
