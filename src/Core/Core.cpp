@@ -54,7 +54,7 @@ void Game::Core::Run()
     _window.setFramerateLimit(60);
     _player2.setScale({1, -1});
     std::vector<Game::Block> map_player1;
-    std::vector<Game::Block> map_player1;
+    std::vector<Game::Block> map_player2;
     map_player1 = _map.getMap_player1();
     map_player2 = _map.getMap_player2();
     while (_window.isOpen()) {
