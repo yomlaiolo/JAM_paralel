@@ -37,3 +37,12 @@ void Game::Parallax::update(sf::RenderWindow &window, float deltaTime)
         _sprites[i].setPosition(_positions[i].first, _positions[i].second);
     }
 }
+
+void Game::Parallax::draw(sf::RenderWindow &window)
+{
+    for (int i = 0; i < _sprites.size(); i++) {
+        _sprites[i].setPosition(_positions[i].first, _positions[i].second);
+        _sprites[i].setTexture(_textures[i]);
+        window.draw(_sprites[i]);
+    }
+}
