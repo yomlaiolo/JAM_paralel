@@ -37,6 +37,7 @@ static void add_layer(Game::Parallax &parallax, std::string path, float speed, i
 
 void Game::Core::Run()
 {
+
     add_layer(_parallax_p1, "assets/Parallax1-1.png", 0.8, 0, 0);
     add_layer(_parallax_p1, "assets/Parallax1-1.png", 0.8, 1920, 0);
     add_layer(_parallax_p1, "assets/Parallax1-2.png", 1.8, 0, 0);
@@ -58,23 +59,75 @@ void Game::Core::Run()
     while (_window.isOpen()) {
         _dtime = getDtime();
         sf::Event event;
+        _player1.setDirection(Direction::NONE);
+        _player2.setDirection(Direction::NONE);
         while (_window.pollEvent(event)) {
             if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
                 _window.close();
                 return;
             }
+            if (event.type == sf::Event::KeyPressed) {
+                if (event.key.code == sf::Keyboard::Z) {
+                    pressed_z = true;
+                    _player1.setDirection(Direction::UP);
+                }
+                if (event.key.code == sf::Keyboard::Q) {
+                    pressed_q = true;
+                    _player1.setDirection(Direction::LEFT);
+                }
+                if (event.key.code == sf::Keyboard::D) {
+                    pressed_d = true;
+                    _player1.setDirection(Direction::RIGHT);
+                }
+                if (event.key.code == sf::Keyboard::Up) {
+                    pressed_up = true;
+                    _player2.setDirection(Direction::UP);
+                }
+                if (event.key.code == sf::Keyboard::Left) {
+                    pressed_left = true;
+                    _player2.setDirection(Direction::LEFT);
+                }
+                if (event.key.code == sf::Keyboard::Right) {
+                    pressed_right = true;
+                    _player2.setDirection(Direction::RIGHT);
+                }
+            }
+            if (event.type == sf::Event::KeyReleased) {
+                if (event.key.code == sf::Keyboard::Z) {
+                    pressed_z = false;
+                    _player1.setDirection(Direction::UP);
+                }
+                if (event.key.code == sf::Keyboard::Q) {
+                    pressed_q = false;
+                    _player1.setDirection(Direction::LEFT);
+                }
+                if (event.key.code == sf::Keyboard::D) {
+                    pressed_d = false;
+                    _player1.setDirection(Direction::RIGHT);
+                }
+                if (event.key.code == sf::Keyboard::Up) {
+                    pressed_up = false;
+                    _player2.setDirection(Direction::UP);
+                }
+                if (event.key.code == sf::Keyboard::Left) {
+                    pressed_left = false;
+                    _player2.setDirection(Direction::LEFT);
+                }
+                if (event.key.code == sf::Keyboard::Right) {
+                    pressed_right = false;
+                    _player2.setDirection(Direction::RIGHT);
+                }
+            }
         }
         _window.clear();
         _player1.getDirection();
-        //_parallax_p1.update(_window, _dtime, _player1.getDirection());
-        //_parallax_p2.update(_window, _dtime, _player2.getDirection());
-        _parallax_p1.update(_dtime, Direction::RIGHT);
-        _parallax_p2.update(_dtime, Direction::LEFT);
+        _parallax_p1.update(_dtime, _player1.getDirection());
+        _parallax_p2.update(_dtime, _player2.getDirection());
         _parallax_p1.draw(_window);
         _parallax_p2.draw(_window);
         //print all map block
         for (int i = 0; i < (int)map.size(); i++) {
-            map[i].update(_dtime, Direction::RIGHT);
+            map[i].update(_dtime, _player1.getDirection());
             map[i].draw(_window);
         }
         _player1.update(_dtime);

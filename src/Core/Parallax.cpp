@@ -28,9 +28,10 @@ void Game::Parallax::update(float deltaTime, Game::Direction direction)
 {
     float x;
     for (std::size_t i = 0; i < _sprites.size(); i++) {
-        if (direction == Direction::LEFT)
-            x = _sprites[i].getPosition().x - _speeds[i] * 100 * deltaTime;
+        x = _sprites[i].getPosition().x;
         if (direction == Direction::RIGHT)
+            x = _sprites[i].getPosition().x - _speeds[i] * 100 * deltaTime;
+        if (direction == Direction::LEFT)
             x = _sprites[i].getPosition().x + _speeds[i] * 100 * deltaTime;
         _sprites[i].setPosition(x, _sprites[i].getPosition().y);
         if (_sprites[i].getPosition().x < -1920)

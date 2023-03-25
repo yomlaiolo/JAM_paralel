@@ -31,5 +31,14 @@ namespace Game {
         sf::Clock _clock;
         sf::Time _time;
         float _dtime;
+
+        bool pressed_z = false;
+        bool pressed_q = false;
+        bool pressed_d = false;
+    
+        bool pressed_up = false;
+        bool pressed_left = false;
+        bool pressed_right = false;
+
 };
 }
