@@ -30,7 +30,7 @@ void Game::Parallax::addLayer(sf::Sprite sprite, sf::Texture texture, std::pair<
 
 void Game::Parallax::update(sf::RenderWindow &window, float deltaTime)
 {
-    for (int i = 0; i < _sprites.size(); i++) {
+    for (std::size_t i = 0; i < _sprites.size(); i++) {
         _positions[i].first -= _speeds[i] * deltaTime;
         if (_positions[i].first < -1920)
             _positions[i].first = 1920;

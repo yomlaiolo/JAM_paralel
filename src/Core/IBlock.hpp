@@ -17,7 +17,7 @@
 
 namespace Game {
     enum Event {
-        NONE,
+        NO,
         DOOR,
         KEY,
         TP,

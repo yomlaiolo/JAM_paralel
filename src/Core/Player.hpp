@@ -24,9 +24,9 @@ namespace Game {
 
     class Player {
         public:
-            Player();
+            Player(const std::string &texture);
             ~Player();
-            void move(Direction direction);
+            void move(Direction direction, float dtime);
             void update();
             void draw(sf::RenderWindow &window);
             void setPosition(std::pair<int, int> position);
@@ -40,6 +40,7 @@ namespace Game {
         protected:
         private:
             sf::RenderWindow _window;
+            sf::Texture _texture;
             sf::Sprite _sprite;
             std::pair<int, int> _position;
             std::pair<int, int> _size;

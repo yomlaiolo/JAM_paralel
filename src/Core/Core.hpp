@@ -19,10 +19,16 @@ namespace Game {
         Core(std::string option);
         ~Core();
         void Run();
+        float getDtime();
     protected:
     private:
         Parallax _parallax;
-        std::pair<Player, Player> _players;
+        Player _player1;
+        Player _player2;
         Map _map;
+        sf::RenderWindow _window;
+        sf::Clock _clock;
+        sf::Time _time;
+        float _dtime;
 };
 }

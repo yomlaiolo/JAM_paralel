@@ -15,7 +15,7 @@ Game::Block::Block(const std::string &texture, const std::pair<int, int> &coords
     _sprite.setTexture(_texture);
     _isSolid = false;
     _isEvent = false;
-    _event = Game::Event::NONE;
+    _event = Game::Event::NO;
 }
 
 Game::Block::~Block()

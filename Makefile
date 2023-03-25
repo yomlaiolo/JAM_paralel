@@ -7,6 +7,10 @@
 
 FILES	=	main.cpp \
 			Core/Block.cpp \
+			Core/Player.cpp \
+			Core/Core.cpp \
+			Core/Map.cpp \
+			Core/Parallax.cpp \
 
 SRC		=	$(FILES:%=src/%)
 
@@ -17,7 +21,7 @@ OBJ		=	$(SRC:.cpp=.o)
 
 NAME	=	DoubleVision
 
-CFLAGS	=	-Wall -Wextra -I./include -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+CFLAGS	=	-Wall -Wextra -I./src/Core -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 CC = g++
 
