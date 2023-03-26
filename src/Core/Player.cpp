@@ -5,6 +5,7 @@
 ** Player
 */
 
+#include <cmath>
 #include "Player.hpp"
 
 Game::Player::Player(const std::string &texture, sf::Vector2f pos)
@@ -19,11 +20,23 @@ Game::Player::Player(const std::string &texture, sf::Vector2f pos)
     _anim_x = 0;
     _anim_y = 0;
     _time = 0;
+    _timesincelastjump = 0;
+    _isJumping = false;
 }
 
 Game::Player::~Player()
 {
 
+}
+
+void Game::Player::setJumping(bool isJumping)
+{
+    _isJumping = isJumping;
+}
+
+bool Game::Player::isJumping()
+{
+    return _isJumping;
 }
 
 void Game::Player::move(Direction direction, float dtime)
@@ -38,9 +51,24 @@ void Game::Player::move(Direction direction, float dtime)
         _position.x += _speed * dtime;
 }
 
-void Game::Player::update(const float &dtime)
+void Game::Player::update(const float &dtime, int direction)
 {
+    float jumpHeight;
+
     _time += dtime;
+    if (_isJumping) {
+        _timesincelastjump += dtime;
+        jumpHeight = pow(_timesincelastjump - 0.5, 2) * 50 * direction;
+        jumpHeight *= _timesincelastjump > 0.5 ? -1 : 1;
+        _position.y -= jumpHeight;
+
+        if (_timesincelastjump >= 0.95) {
+            _isJumping = false;
+            _timesincelastjump = 0;
+        }
+    }
+
+
     if (_time > 0.2) {
         _time = 0;
         _sprite.setTextureRect(sf::IntRect(52 * _anim_x, 98 * _anim_y, 52, 98));
