@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include "Enum.hpp"
 #include "IBlock.hpp"
 #include "Player.hpp"
 

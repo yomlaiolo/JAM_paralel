@@ -14,20 +14,9 @@
 #include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
 #include <string>
+#include "Enum.hpp"
 
 namespace Game {
-    enum Event {
-        NO,
-        DOOR,
-        KEY,
-        TP,
-        CHEST,
-        ENEMY,
-        BOSS,
-        PLAYER,
-        EXIT
-    };
-    
     class IBlock {
         public:
             virtual ~IBlock() = default;
@@ -45,6 +34,7 @@ namespace Game {
             virtual bool isEvent() const = 0;
             virtual Game::Event getEvent() const = 0;
             virtual void draw(sf::RenderWindow &window) = 0;
+            virtual void update(float deltaTime, Game::Direction direction) = 0;
         protected:
         private:
     };

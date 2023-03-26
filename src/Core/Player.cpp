@@ -5,7 +5,6 @@
 ** Player
 */
 
-#include <cmath>
 #include "Player.hpp"
 
 Game::Player::Player(const std::string &texture, sf::Vector2f pos)
@@ -14,7 +13,7 @@ Game::Player::Player(const std::string &texture, sf::Vector2f pos)
     _sprite.setTexture(_texture);
     _position = pos;
     _size = {52, 98};
-    _speed = 0;
+    _speed = 180;
     _direction = Direction::NONE;
     this->setPosition(pos);
     _anim_x = 0;
@@ -22,6 +21,7 @@ Game::Player::Player(const std::string &texture, sf::Vector2f pos)
     _time = 0;
     _timesincelastjump = 0;
     _isJumping = false;
+    _scale = {1, 1};
 }
 
 Game::Player::~Player()
@@ -67,8 +67,6 @@ void Game::Player::update(const float &dtime, int direction)
             _timesincelastjump = 0;
         }
     }
-
-
     if (_time > 0.2) {
         _time = 0;
         _sprite.setTextureRect(sf::IntRect(52 * _anim_x, 98 * _anim_y, 52, 98));
@@ -81,6 +79,42 @@ void Game::Player::update(const float &dtime, int direction)
                 _anim_y = 0;
         }
     }
+}
+
+bool Game::Player::checkCollision(const std::vector<IBlock *> &blocks, float dtime)
+{
+    sf::Vector2f pos = this->getPosition();
+
+    if (_direction == Direction::UP)
+        pos.y -= _speed * dtime;
+    if (_direction == Direction::DOWN)
+        pos.y += _speed * dtime;
+    if (_direction == Direction::LEFT)
+        pos.x -= _speed * dtime;
+    if (_direction == Direction::RIGHT)
+        pos.x += _speed * dtime;
+    for (auto block : blocks) {
+        if (_direction == Direction::LEFT) {
+            if ((pos.x - _size.x <= block->getCoords().x + block->getSize().x) && (_scale.y == 1 && pos.y <= block->getCoords().y + block->getSize().y)) {
+                if (block->getCoords().x > pos.x && (_scale.y == 1 && block->getCoords().y > pos.y))
+                    continue;
+                else {
+                    std::cout << "player x: " << pos.x << " player y: " << pos.y << " block x: " << block->getCoords().x << " block y: " << block->getCoords().y << std::endl;
+                    return true;
+                }
+            }
+        } else if (_direction == Direction::RIGHT) {
+            if ((pos.x + _size.x >= block->getCoords().x) && (_scale.y == -1 && pos.y + _size.y >= block->getCoords().y)) {
+                if (block->getCoords().x + block->getSize().x < pos.x && (_scale.y == -1 && block->getCoords().y < pos.y))
+                    continue;
+                else {
+                    std::cout << "player x: " << pos.x << " player y: " << pos.y << " block x: " << block->getCoords().x << " block y: " << block->getCoords().y << std::endl;
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
 }
 
 void Game::Player::draw(sf::RenderWindow &window)
@@ -111,6 +145,7 @@ void Game::Player::setDirection(Direction direction)
 
 void Game::Player::setScale(sf::Vector2f scale)
 {
+    _scale = scale;
     _sprite.setScale(scale);
 }
 

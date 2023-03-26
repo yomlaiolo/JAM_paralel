@@ -20,8 +20,7 @@ namespace Game {
         ~Core();
         void Run();
         float getDtime();
-        bool isCollide(const sf::Sprite &sprite1, const sf::Sprite &sprite2);
-        bool checkCollision(Player &player, std::vector<Block *> blocks, float dtime);
+        void manageEvent();
     protected:
     private:
         Parallax _parallax_p1;
@@ -38,7 +37,7 @@ namespace Game {
         bool _pressed_q = false;
         bool _pressed_d = false;
     
-        bool _pressed_up = false;
+        bool _pressed_down = false;
         bool _pressed_left = false;
         bool _pressed_right = false;
 

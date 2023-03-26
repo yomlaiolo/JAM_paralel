@@ -37,9 +37,6 @@ static void add_layer(Game::Parallax &parallax, std::string path, float speed, i
 
 void Game::Core::Run()
 {
-
-    sf::Clock clock;
-
     add_layer(_parallax_p1, "assets/Parallax1-1.png", 0.8, 0, 0);
     add_layer(_parallax_p1, "assets/Parallax1-1.png", 0.8, 1920, 0);
     add_layer(_parallax_p1, "assets/Parallax1-2.png", 1.8, 0, 0);
@@ -56,109 +53,21 @@ void Game::Core::Run()
 
     _window.setFramerateLimit(60);
     _player2.setScale({1, -1});
-    std::vector<Game::Block *> map_player1;
-    std::vector<Game::Block *> map_floor;
-    std::vector<Game::Block *> map_player2;
+    std::vector<Game::IBlock *> map_player1;
+    std::vector<Game::IBlock *> map_floor;
+    std::vector<Game::IBlock *> map_player2;
     map_player1 = _map.getMap_player1();
     map_floor = _map.getMap_floor();
     map_player2 = _map.getMap_player2();
-    //IMPORTANT NE PAS SUPPRIMER LES STD::COUT
-    //std::cout << "player 1:" << std::endl << _player1.getPosition().x << " " << _player1.getPosition().y << std::endl;
-    //for (auto &i : map_player1) {
-    //    std::cout << "x: " << i.getCoords().x << " y: " << i.getCoords().y << std::endl;
-    //}
-    //std::cout << "sol:" << std::endl;
-    //for (auto &i : map_player2) {
-    //    std::cout << "x: " << i.getCoords().x << " y: " << i.getCoords().y << std::endl;
-    //}
-    //std::cout << "player 2:" << std::endl << _player2.getPosition().x << " " << _player2.getPosition().y << std::endl;
-    //for (auto &i : map_player3) {
-    //    std::cout << "x: " << i.getCoords().x << " y: " << i.getCoords().y << std::endl;
-    //}
     while (_window.isOpen()) {
         _dtime = getDtime();
-        sf::Event event;
-        while (_window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-                _window.close();
-                return;
-            }
-            if (event.type == sf::Event::KeyPressed) {
-                clock.restart();
-                switch (event.key.code) {
-                    case sf::Keyboard::Z:
-                        _pressed_z = true;
-                        _player1.setDirection(Direction::UP);
-                        break;
-                    case sf::Keyboard::Q:
-                        _pressed_q = true;
-                        _player1.setDirection(Direction::LEFT);
-                        _player1.setScale({-1, 1});
-                        _player1.setPosition({850 + _player1.getSize().x, _player1.getPosition().y});
-                        break;
-                    case sf::Keyboard::D:
-                        _pressed_d = true;
-                        _player1.setDirection(Direction::RIGHT);
-                        _player1.setScale({1, 1});
-                        _player1.setPosition({850, 414});
-                        break;
-                    case sf::Keyboard::Up:
-                        _pressed_up = true;
-                        _player2.setDirection(Direction::UP);
-                        break;
-                    case sf::Keyboard::Left:
-                        _pressed_left = true;
-                        _player2.setDirection(Direction::LEFT);
-                        _player2.setScale({-1, -1});
-                        _player2.setPosition({850 + _player2.getSize().x, _player2.getPosition().y});
-                        break;
-                    case sf::Keyboard::Right:
-                        _pressed_right = true;
-                        _player2.setDirection(Direction::RIGHT);
-                        _player2.setScale({1, -1});
-                        _player2.setPosition({850, 674});
-                        break;
-                    default:
-                        break;
-                }
-            }
-            if (event.type == sf::Event::KeyReleased) {
-                switch (event.key.code) {
-                    case sf::Keyboard::Z:
-                        _pressed_z = false;
-                        _player1.setJumping(true);
-                        break;
-                    case sf::Keyboard::Q:
-                        _pressed_q = false;
-                        _player1.setDirection(Direction::NONE);
-                        break;
-                    case sf::Keyboard::D:
-                        _pressed_d = false;
-                        _player1.setDirection(Direction::NONE);
-                        break;
-                    case sf::Keyboard::Down:
-                        _pressed_up = false;
-                        _player2.setJumping(true);
-                        break;
-                    case sf::Keyboard::Left:
-                        _pressed_left = false;
-                        _player2.setDirection(Direction::NONE);
-                        break;
-                    case sf::Keyboard::Right:
-                        _pressed_right = false;
-                        _player2.setDirection(Direction::NONE);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
+        this->manageEvent();
     _window.clear();
     _player1.getDirection();
-    if (checkCollision(_player1, map_player1, _dtime)) {
+    if (_player1.checkCollision(map_player1, _dtime)) {
         _player1.setDirection(Direction::NONE);
     }
-    if (checkCollision(_player2, map_player2, _dtime)) {
+    if (_player2.checkCollision(map_player2, _dtime)) {
         _player2.setDirection(Direction::NONE);
     }
     _parallax_p1.update(_dtime, _player1.getDirection());
@@ -195,22 +104,82 @@ float Game::Core::getDtime()
     return dtime;
 }
 
-bool Game::Core::checkCollision(Player &player, std::vector<Game::Block *> blocks, float dtime)
+void Game::Core::manageEvent()
 {
-    sf::Vector2f pos = player.getPosition();
-    if (player.getDirection() == Direction::UP)
-        pos.y -= player.getSpeed() * dtime;
-    if (player.getDirection() == Direction::DOWN)
-        pos.y += player.getSpeed() * dtime;
-    if (player.getDirection() == Direction::LEFT)
-        pos.x -= player.getSpeed() * dtime;
-    if (player.getDirection() == Direction::RIGHT)
-        pos.x += player.getSpeed() * dtime;
-    for (auto block : blocks) {
-        std::cout << "x: " << block->getCoords().x << " x2: " << block->getCoords().x + block->getSize().x << " y: " << block->getCoords().y << " y2: " << block->getCoords().y + block->getSize().y << std::endl;
-        std::cout << "pos.x: " << pos.x << " pos.y: " << pos.y << std::endl;
-        if (block->getCoords().x <= pos.x && block->getCoords().x + block->getSize().x >= pos.x && block->getCoords().y <= pos.y && block->getCoords().y + block->getSize().y >= pos.y)
-            return true;
+    sf::Clock clock;
+    sf::Event event;
+
+    while (_window.pollEvent(event)) {
+        if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+            _window.close();
+            return;
+        }
+        if (event.type == sf::Event::KeyPressed) {
+            clock.restart();
+            switch (event.key.code) {
+                case sf::Keyboard::Z:
+                    _pressed_z = true;
+                    _player1.setJumping(true);
+                    break;
+                case sf::Keyboard::Q:
+                    _pressed_q = true;
+                    _player1.setDirection(Direction::LEFT);
+                    _player1.setScale({-1, 1});
+                    _player1.setPosition({850 + _player1.getSize().x, _player1.getPosition().y});
+                    break;
+                case sf::Keyboard::D:
+                    _pressed_d = true;
+                    _player1.setDirection(Direction::RIGHT);
+                    _player1.setScale({1, 1});
+                    _player1.setPosition({850, _player1.getPosition().y});
+                    break;
+                case sf::Keyboard::Down:
+                    _pressed_down = true;
+                    _player2.setJumping(true);
+                    break;
+                case sf::Keyboard::Left:
+                    _pressed_left = true;
+                    _player2.setDirection(Direction::LEFT);
+                    _player2.setScale({-1, -1});
+                    _player2.setPosition({850 + _player2.getSize().x, _player2.getPosition().y});
+                    break;
+                case sf::Keyboard::Right:
+                    _pressed_right = true;
+                    _player2.setDirection(Direction::RIGHT);
+                    _player2.setScale({1, -1});
+                    _player2.setPosition({850, _player2.getPosition().y});
+                    break;
+                default:
+                    break;
+            }
+        }
+        if (event.type == sf::Event::KeyReleased) {
+            switch (event.key.code) {
+                case sf::Keyboard::Z:
+                    _pressed_z = false;
+                    break;
+                case sf::Keyboard::Q:
+                    _pressed_q = false;
+                    _player1.setDirection(Direction::NONE);
+                    break;
+                case sf::Keyboard::D:
+                    _pressed_d = false;
+                    _player1.setDirection(Direction::NONE);
+                    break;
+                case sf::Keyboard::Down:
+                    _pressed_down = false;
+                    break;
+                case sf::Keyboard::Left:
+                    _pressed_left = false;
+                    _player2.setDirection(Direction::NONE);
+                    break;
+                case sf::Keyboard::Right:
+                    _pressed_right = false;
+                    _player2.setDirection(Direction::NONE);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
-    return false;
 }

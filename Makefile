@@ -5,12 +5,12 @@
 ## Makefile
 ##
 
-FILES	=	main.cpp \
-			Core/Block.cpp \
+FILES	=	Core/Block.cpp \
 			Core/Player.cpp \
 			Core/Core.cpp \
 			Core/Map.cpp \
 			Core/Parallax.cpp \
+			main.cpp \
 
 SRC		=	$(FILES:%=src/%)
 

@@ -7,21 +7,14 @@
 
 #pragma once
 
-#include <iostream>
+#include "IBlock.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
+#include <iostream>
+#include <cmath>
 
 namespace Game {
-
-    enum Direction {
-        UP,
-        DOWN,
-        LEFT,
-        RIGHT,
-        NONE
-    };
-
     class Player {
         public:
             Player(const std::string &texture, sf::Vector2f pos);
@@ -40,6 +33,7 @@ namespace Game {
             Direction getDirection();
             void setJumping(bool isJumping);
             bool isJumping();
+            bool checkCollision(const std::vector<IBlock *> &blocks, float dtime);
         protected:
         private:
             sf::RenderWindow _window;
@@ -47,6 +41,7 @@ namespace Game {
             sf::Sprite _sprite;
             sf::Vector2f _position;
             sf::Vector2f _size;
+            sf::Vector2f _scale;
             int _speed;
             Direction _direction;
             int _anim_x;

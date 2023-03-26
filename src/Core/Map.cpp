@@ -60,23 +60,19 @@ void Game::Map::Parse()
         std::cout << "Unable to open file" << std::endl;
         exit(84);
     }
-    //print size of all vector
-    std::cout << "size player1: " << _map_player1.size() << std::endl;
-    std::cout << "size floor: " << _map_floor.size() << std::endl;
-    std::cout << "size player2: " << _map_player2.size() << std::endl;
 }
 
-std::vector<Game::Block *> Game::Map::getMap_player1() const
+std::vector<Game::IBlock *> Game::Map::getMap_player1() const
 {
     return _map_player1;
 }
 
-std::vector<Game::Block *> Game::Map::getMap_floor() const
+std::vector<Game::IBlock *> Game::Map::getMap_floor() const
 {
     return _map_floor;
 }
 
-std::vector<Game::Block *> Game::Map::getMap_player2() const
+std::vector<Game::IBlock *> Game::Map::getMap_player2() const
 {
     return _map_player2;
 }
