@@ -37,6 +37,11 @@ static void add_layer(Game::Parallax &parallax, std::string path, float speed, i
 
 void Game::Core::Run()
 {
+    sf::Music music;
+    music.openFromFile("assets/music.ogg");
+    music.play();
+    music.setLoop(true);
+
     add_layer(_parallax_p1, "assets/Parallax1-1.png", 0.8, 0, 0);
     add_layer(_parallax_p1, "assets/Parallax1-1.png", 0.8, 1920, 0);
     add_layer(_parallax_p1, "assets/Parallax1-2.png", 1.8, 0, 0);
