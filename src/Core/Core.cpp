@@ -155,6 +155,12 @@ void Game::Core::Run()
         }
     _window.clear();
     _player1.getDirection();
+    if (checkCollision(_player1, map_player1, _dtime)) {
+        _player1.setDirection(Direction::NONE);
+    }
+    if (checkCollision(_player2, map_player2, _dtime)) {
+        _player2.setDirection(Direction::NONE);
+    }
     _parallax_p1.update(_dtime, _player1.getDirection());
     _parallax_p2.update(_dtime, _player2.getDirection());
     _parallax_p1.draw(_window);
@@ -187,4 +193,24 @@ float Game::Core::getDtime()
     float dtime = time - old;
     old = time;
     return dtime;
+}
+
+bool Game::Core::checkCollision(Player &player, std::vector<Game::Block *> blocks, float dtime)
+{
+    sf::Vector2f pos = player.getPosition();
+    if (player.getDirection() == Direction::UP)
+        pos.y -= player.getSpeed() * dtime;
+    if (player.getDirection() == Direction::DOWN)
+        pos.y += player.getSpeed() * dtime;
+    if (player.getDirection() == Direction::LEFT)
+        pos.x -= player.getSpeed() * dtime;
+    if (player.getDirection() == Direction::RIGHT)
+        pos.x += player.getSpeed() * dtime;
+    for (auto block : blocks) {
+        std::cout << "x: " << block->getCoords().x << " x2: " << block->getCoords().x + block->getSize().x << " y: " << block->getCoords().y << " y2: " << block->getCoords().y + block->getSize().y << std::endl;
+        std::cout << "pos.x: " << pos.x << " pos.y: " << pos.y << std::endl;
+        if (block->getCoords().x <= pos.x && block->getCoords().x + block->getSize().x >= pos.x && block->getCoords().y <= pos.y && block->getCoords().y + block->getSize().y >= pos.y)
+            return true;
+    }
+    return false;
 }

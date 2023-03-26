@@ -20,6 +20,8 @@ namespace Game {
         ~Core();
         void Run();
         float getDtime();
+        bool isCollide(const sf::Sprite &sprite1, const sf::Sprite &sprite2);
+        bool checkCollision(Player &player, std::vector<Block *> blocks, float dtime);
     protected:
     private:
         Parallax _parallax_p1;
