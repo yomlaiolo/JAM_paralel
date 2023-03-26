@@ -9,8 +9,6 @@
 
 Game::Parallax::Parallax()
 {
-    _sprites = std::vector<sf::Sprite>();
-    _speeds = std::vector<float>();
 }
 
 Game::Parallax::~Parallax()

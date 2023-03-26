@@ -7,7 +7,7 @@
 
 #include "Core.hpp"
 
-Game::Core::Core(std::string option) : _parallax_p1(), _parallax_p2(), _player1("assets/player1.png", {850, 414}), _player2("assets/player2.png", {850, 674}), _map(option), _window(sf::VideoMode(1920, 1080), "JAM_paralel"), _clock(), _time()
+Game::Core::Core(std::string option) : _player1("assets/player1.png", {850, 414}), _player2("assets/player2.png", {850, 674}), _map(option), _window(sf::VideoMode(1920, 1080), "JAM_paralel")
 {
     _map.Parse();
     _dtime = 0;
@@ -56,25 +56,25 @@ void Game::Core::Run()
 
     _window.setFramerateLimit(60);
     _player2.setScale({1, -1});
-    std::vector<Game::Block> map_player1;
-    std::vector<Game::Block> map_player2;
-    std::vector<Game::Block> map_player3;
+    std::vector<Game::Block *> map_player1;
+    std::vector<Game::Block *> map_floor;
+    std::vector<Game::Block *> map_player2;
     map_player1 = _map.getMap_player1();
+    map_floor = _map.getMap_floor();
     map_player2 = _map.getMap_player2();
-    map_player3 = _map.getMap_player3();
     //IMPORTANT NE PAS SUPPRIMER LES STD::COUT
-    std::cout << "player 1:" << std::endl << _player1.getPosition().x << " " << _player1.getPosition().y << std::endl;
-    for (auto &i : map_player1) {
-        std::cout << "x: " << i.getCoords().x << " y: " << i.getCoords().y << std::endl;
-    }
-    std::cout << "sol:" << std::endl;
-    for (auto &i : map_player2) {
-        std::cout << "x: " << i.getCoords().x << " y: " << i.getCoords().y << std::endl;
-    }
-    std::cout << "player 2:" << std::endl << _player2.getPosition().x << " " << _player2.getPosition().y << std::endl;
-    for (auto &i : map_player3) {
-        std::cout << "x: " << i.getCoords().x << " y: " << i.getCoords().y << std::endl;
-    }
+    //std::cout << "player 1:" << std::endl << _player1.getPosition().x << " " << _player1.getPosition().y << std::endl;
+    //for (auto &i : map_player1) {
+    //    std::cout << "x: " << i.getCoords().x << " y: " << i.getCoords().y << std::endl;
+    //}
+    //std::cout << "sol:" << std::endl;
+    //for (auto &i : map_player2) {
+    //    std::cout << "x: " << i.getCoords().x << " y: " << i.getCoords().y << std::endl;
+    //}
+    //std::cout << "player 2:" << std::endl << _player2.getPosition().x << " " << _player2.getPosition().y << std::endl;
+    //for (auto &i : map_player3) {
+    //    std::cout << "x: " << i.getCoords().x << " y: " << i.getCoords().y << std::endl;
+    //}
     while (_window.isOpen()) {
         _dtime = getDtime();
         sf::Event event;
@@ -94,7 +94,7 @@ void Game::Core::Run()
                         _pressed_q = true;
                         _player1.setDirection(Direction::LEFT);
                         _player1.setScale({-1, 1});
-                        _player1.setPosition({850 + _player1.getSize().x * 5, _player1.getPosition().y});
+                        _player1.setPosition({850 + _player1.getSize().x, _player1.getPosition().y});
                         break;
                     case sf::Keyboard::D:
                         _pressed_d = true;
@@ -110,7 +110,7 @@ void Game::Core::Run()
                         _pressed_left = true;
                         _player2.setDirection(Direction::LEFT);
                         _player2.setScale({-1, -1});
-                        _player2.setPosition({850 + _player2.getSize().x * 5, _player2.getPosition().y});
+                        _player2.setPosition({850 + _player2.getSize().x, _player2.getPosition().y});
                         break;
                     case sf::Keyboard::Right:
                         _pressed_right = true;
@@ -160,17 +160,17 @@ void Game::Core::Run()
     _parallax_p1.draw(_window);
     _parallax_p2.draw(_window);
     //print all map block
-    for (std::size_t i = 0; i < map_player1.size(); i++) {
-        map_player1[i].update(_dtime, _player1.getDirection());
-        map_player1[i].draw(_window);
+    for (auto &i : map_player1) {
+        i->update(_dtime, _player1.getDirection());
+        i->draw(_window);
     }
-    for (std::size_t i = 0; i < map_player2.size(); i++) {
-        map_player2[i].update(_dtime, Direction::NONE);
-        map_player2[i].draw(_window);
+    for (auto &i : map_floor) {
+        i->update(_dtime, Direction::NONE);
+        i->draw(_window);
     }
-    for (std::size_t i = 0; i < map_player3.size(); i++) {
-        map_player3[i].update(_dtime, _player2.getDirection());
-        map_player3[i].draw(_window);
+    for (auto &i : map_player2) {
+        i->update(_dtime, _player2.getDirection());
+        i->draw(_window);
     }
     _player1.update(_dtime);
     _player2.update(_dtime);

@@ -9,12 +9,10 @@
 
 Game::Player::Player(const std::string &texture, sf::Vector2f pos)
 {
-    _texture = sf::Texture();
     _texture.loadFromFile(texture);
-    _sprite = sf::Sprite();
     _sprite.setTexture(_texture);
     _position = pos;
-    _size = {20, 53};
+    _size = {52, 98};
     _speed = 0;
     _direction = Direction::NONE;
     this->setPosition(pos);
@@ -45,7 +43,7 @@ void Game::Player::update(const float &dtime)
     _time += dtime;
     if (_time > 0.2) {
         _time = 0;
-        _sprite.setTextureRect(sf::IntRect(102 * _anim_x, 98 * _anim_y, 102, 98));
+        _sprite.setTextureRect(sf::IntRect(52 * _anim_x, 98 * _anim_y, 52, 98));
         _anim_x++;
         if (_anim_x > 5) {
             _anim_x = 0;

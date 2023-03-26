@@ -9,8 +9,6 @@
 
 Game::Block::Block(const std::string &texture, const sf::Vector2f &coords, const sf::Vector2f &size)
 {
-    _sprite = sf::Sprite();
-    _texture = sf::Texture();
     _coords = coords;
     _size = size;
     _texture.loadFromFile(texture);
@@ -19,8 +17,6 @@ Game::Block::Block(const std::string &texture, const sf::Vector2f &coords, const
     _isEvent = false;
     _event = Game::Event::NO;
     _sprite.setPosition(_coords);
-    //print coords
-    std::cout << "x: " << _coords.x << " y: " << _coords.y << std::endl;
 }
 
 Game::Block::~Block()
@@ -101,10 +97,9 @@ void Game::Block::draw(sf::RenderWindow &window)
 
 void Game::Block::update(float deltaTime, Game::Direction direction)
 {
-    sf::Vector2f coords = getCoords();
     if (direction == Game::Direction::LEFT)
-        coords.x += 280 * deltaTime;
+        _coords.x += 280 * deltaTime;
     if (direction == Game::Direction::RIGHT)
-        coords.x -= 280 * deltaTime;
-    setCoords(coords);
+        _coords.x -= 280 * deltaTime;
+    _sprite.setPosition(_coords);
 }

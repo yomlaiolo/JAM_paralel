@@ -24,7 +24,6 @@ namespace Game {
             void draw(sf::RenderWindow &window);
         protected:
         private:
-            sf::RenderWindow _window;
             std::vector<sf::Sprite> _sprites;
             std::vector<float> _speeds;
     };
