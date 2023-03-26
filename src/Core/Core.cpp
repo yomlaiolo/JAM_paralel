@@ -126,7 +126,7 @@ void Game::Core::Run()
                 switch (event.key.code) {
                     case sf::Keyboard::Z:
                         _pressed_z = false;
-                        _player1.setDirection(Direction::NONE);
+                        _player1.setJumping(true);
                         break;
                     case sf::Keyboard::Q:
                         _pressed_q = false;
@@ -136,9 +136,9 @@ void Game::Core::Run()
                         _pressed_d = false;
                         _player1.setDirection(Direction::NONE);
                         break;
-                    case sf::Keyboard::Up:
+                    case sf::Keyboard::Down:
                         _pressed_up = false;
-                        _player2.setDirection(Direction::NONE);
+                        _player2.setJumping(true);
                         break;
                     case sf::Keyboard::Left:
                         _pressed_left = false;
@@ -178,8 +178,8 @@ void Game::Core::Run()
         i->update(_dtime, _player2.getDirection());
         i->draw(_window);
     }
-    _player1.update(_dtime);
-    _player2.update(_dtime);
+    _player1.update(_dtime, 1);
+    _player2.update(_dtime, -1);
     _player1.draw(_window);
     _player2.draw(_window);
     _window.display();

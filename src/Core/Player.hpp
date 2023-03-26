@@ -27,7 +27,7 @@ namespace Game {
             Player(const std::string &texture, sf::Vector2f pos);
             ~Player();
             void move(Direction direction, float dtime);
-            void update(const float &dtime);
+            void update(const float &dtime, int direction);
             void draw(sf::RenderWindow &window);
             void setPosition(sf::Vector2f position);
             void setSize(sf::Vector2f size);
@@ -38,6 +38,8 @@ namespace Game {
             sf::Vector2f getSize();
             int getSpeed();
             Direction getDirection();
+            void setJumping(bool isJumping);
+            bool isJumping();
         protected:
         private:
             sf::RenderWindow _window;
@@ -50,5 +52,7 @@ namespace Game {
             int _anim_x;
             int _anim_y;
             float _time;
+            float _timesincelastjump;
+            bool _isJumping;
     };
 }
