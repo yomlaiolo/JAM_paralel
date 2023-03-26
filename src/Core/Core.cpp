@@ -70,10 +70,16 @@ void Game::Core::Run()
         _window.clear();
         _player1.getDirection();
         if (_player1.checkCollision(map_player1, _dtime)) {
-            _player1.setDirection(Direction::NONE);
+            if (_player1.getDirection() == Direction::LEFT)
+                _player1.setDirection(Direction::RIGHT);
+            else if (_player1.getDirection() == Direction::RIGHT)
+                _player1.setDirection(Direction::LEFT);
         }
         if (_player2.checkCollision(map_player2, _dtime)) {
-            _player2.setDirection(Direction::NONE);
+            if (_player2.getDirection() == Direction::LEFT)
+                _player2.setDirection(Direction::RIGHT);
+            else if (_player2.getDirection() == Direction::RIGHT)
+                _player2.setDirection(Direction::LEFT);
         }
         _parallax_p1.update(_dtime, _player1.getDirection());
         _parallax_p2.update(_dtime, _player2.getDirection());
