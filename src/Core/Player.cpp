@@ -84,7 +84,7 @@ void Game::Player::update(const float &dtime, int direction)
 bool Game::Player::checkCollision(const std::vector<IBlock *> &blocks, float dtime)
 {
     sf::Vector2f pos = this->getPosition();
-
+    sf::Rect <float> rect(pos.x, pos.y, _size.x, _size.y);
     if (_direction == Direction::UP)
         pos.y -= _speed * dtime;
     if (_direction == Direction::DOWN)
@@ -93,25 +93,16 @@ bool Game::Player::checkCollision(const std::vector<IBlock *> &blocks, float dti
         pos.x -= _speed * dtime;
     if (_direction == Direction::RIGHT)
         pos.x += _speed * dtime;
+    if (_scale.y == -1)
+        rect.top -= _size.y;
+    if (_scale.x == -1)
+        rect.left -= _size.x;
     for (auto block : blocks) {
-        if (_direction == Direction::LEFT) {
-            if ((pos.x - _size.x <= block->getCoords().x + block->getSize().x) && (_scale.y == 1 && pos.y <= block->getCoords().y + block->getSize().y)) {
-                if (block->getCoords().x > pos.x && (_scale.y == 1 && block->getCoords().y > pos.y))
-                    continue;
-                else {
-                    std::cout << "player x: " << pos.x << " player y: " << pos.y << " block x: " << block->getCoords().x << " block y: " << block->getCoords().y << std::endl;
-                    return true;
-                }
-            }
-        } else if (_direction == Direction::RIGHT) {
-            if ((pos.x + _size.x >= block->getCoords().x) && (_scale.y == -1 && pos.y + _size.y >= block->getCoords().y)) {
-                if (block->getCoords().x + block->getSize().x < pos.x && (_scale.y == -1 && block->getCoords().y < pos.y))
-                    continue;
-                else {
-                    std::cout << "player x: " << pos.x << " player y: " << pos.y << " block x: " << block->getCoords().x << " block y: " << block->getCoords().y << std::endl;
-                    return true;
-                }
-            }
+        sf::Rect <float> rect2(block->getCoords().x, block->getCoords().y, block->getSize().x, block->getSize().y);
+        if (rect.intersects(rect2)) {
+            std::cout << "rect player: " << rect.left << " " << rect.top << " " << rect.width << " " << rect.height << std::endl;
+            std::cout << "rect block: " << rect2.left << " " << rect2.top << " " << rect2.width << " " << rect2.height << std::endl;
+            return true;
         }
     }
     return false;

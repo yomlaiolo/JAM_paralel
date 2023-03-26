@@ -67,36 +67,36 @@ void Game::Core::Run()
     while (_window.isOpen()) {
         _dtime = getDtime();
         this->manageEvent();
-    _window.clear();
-    _player1.getDirection();
-    if (_player1.checkCollision(map_player1, _dtime)) {
-        _player1.setDirection(Direction::NONE);
-    }
-    if (_player2.checkCollision(map_player2, _dtime)) {
-        _player2.setDirection(Direction::NONE);
-    }
-    _parallax_p1.update(_dtime, _player1.getDirection());
-    _parallax_p2.update(_dtime, _player2.getDirection());
-    _parallax_p1.draw(_window);
-    _parallax_p2.draw(_window);
-    //print all map block
-    for (auto &i : map_player1) {
-        i->update(_dtime, _player1.getDirection());
-        i->draw(_window);
-    }
-    for (auto &i : map_floor) {
-        i->update(_dtime, Direction::NONE);
-        i->draw(_window);
-    }
-    for (auto &i : map_player2) {
-        i->update(_dtime, _player2.getDirection());
-        i->draw(_window);
-    }
-    _player1.update(_dtime, 1);
-    _player2.update(_dtime, -1);
-    _player1.draw(_window);
-    _player2.draw(_window);
-    _window.display();
+        _window.clear();
+        _player1.getDirection();
+        if (_player1.checkCollision(map_player1, _dtime)) {
+            _player1.setDirection(Direction::NONE);
+        }
+        if (_player2.checkCollision(map_player2, _dtime)) {
+            _player2.setDirection(Direction::NONE);
+        }
+        _parallax_p1.update(_dtime, _player1.getDirection());
+        _parallax_p2.update(_dtime, _player2.getDirection());
+        _parallax_p1.draw(_window);
+        _parallax_p2.draw(_window);
+        //print all map block
+        for (auto &i : map_player1) {
+            i->update(_dtime, _player1.getDirection());
+            i->draw(_window);
+        }
+        for (auto &i : map_floor) {
+            i->update(_dtime, Direction::NONE);
+            i->draw(_window);
+        }
+        for (auto &i : map_player2) {
+            i->update(_dtime, _player2.getDirection());
+            i->draw(_window);
+        }
+        _player1.update(_dtime, 1);
+        _player2.update(_dtime, -1);
+        _player1.draw(_window);
+        _player2.draw(_window);
+        _window.display();
     }
 }
 
