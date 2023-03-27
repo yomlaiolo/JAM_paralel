@@ -98,7 +98,7 @@ bool Game::Player::checkCollision(const std::vector<IBlock *> &blocks, float dti
     if (_scale.x == -1)
         rect.left -= _size.x;
     for (auto block : blocks) {
-        sf::Rect <float> rect2(block->getCoords().x, block->getCoords().y, block->getSize().x, block->getSize().y);
+        sf::Rect <float> rect2(block->getCoords().x - 8, block->getCoords().y - 8, block->getSize().x + 8, block->getSize().y + 8);
         if (rect.intersects(rect2)) {
             if (block->getType() == '#') {
                 return true;
