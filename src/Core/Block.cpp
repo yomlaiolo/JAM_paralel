@@ -7,7 +7,7 @@
 
 #include "Block.hpp"
 
-Game::Block::Block(const std::string &texture, const sf::Vector2f &coords, const sf::Vector2f &size)
+Game::Block::Block(const std::string &texture, const sf::Vector2f &coords, const sf::Vector2f &size, char type)
 {
     _coords = coords;
     _size = size;
@@ -17,6 +17,7 @@ Game::Block::Block(const std::string &texture, const sf::Vector2f &coords, const
     _isEvent = false;
     _event = Game::Event::NO;
     _sprite.setPosition(_coords);
+    _type = type;
 }
 
 Game::Block::~Block()
@@ -102,4 +103,9 @@ void Game::Block::update(float deltaTime, Game::Direction direction)
     if (direction == Game::Direction::RIGHT)
         _coords.x -= 280 * deltaTime;
     _sprite.setPosition(_coords);
+}
+
+char Game::Block::getType() const
+{
+    return _type;
 }

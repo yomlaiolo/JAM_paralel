@@ -58,11 +58,11 @@ void Game::Player::update(const float &dtime, int direction)
     _time += dtime;
     if (_isJumping) {
         _timesincelastjump += dtime;
-        jumpHeight = pow(_timesincelastjump - 0.5, 2) * 50 * direction;
+        jumpHeight = pow(_timesincelastjump - 0.5, 2) * 75 * direction;
         jumpHeight *= _timesincelastjump > 0.5 ? -1 : 1;
         _position.y -= jumpHeight;
 
-        if (_timesincelastjump >= 0.95) {
+        if (_timesincelastjump >= 0.97) {
             _isJumping = false;
             _timesincelastjump = 0;
         }
@@ -100,11 +100,15 @@ bool Game::Player::checkCollision(const std::vector<IBlock *> &blocks, float dti
     for (auto block : blocks) {
         sf::Rect <float> rect2(block->getCoords().x, block->getCoords().y, block->getSize().x, block->getSize().y);
         if (rect.intersects(rect2)) {
-            std::cout << "rect player: " << rect.left << " " << rect.top << " " << rect.width << " " << rect.height << std::endl;
-            std::cout << "rect block: " << rect2.left << " " << rect2.top << " " << rect2.width << " " << rect2.height << std::endl;
-            return true;
+            if (block->getType() == '#') {
+                return true;
+            } else if (block->getType() == 'E') {
+                _end = true;
+                return false;
+            }
         }
     }
+    _end = false;
     return false;
 }
 
@@ -158,4 +162,9 @@ int Game::Player::getSpeed()
 Game::Direction Game::Player::getDirection()
 {
     return _direction;
+}
+
+bool Game::Player::isEnd()
+{
+    return _end;
 }

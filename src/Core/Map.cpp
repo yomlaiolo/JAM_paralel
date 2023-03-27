@@ -38,12 +38,20 @@ void Game::Map::Parse()
             for (int i = 0; i < (int)line.length(); i++) {
                 if (line[i] == '#') {
                     if (y < 8)
-                        _map_player1.push_back(new Game::Block("assets/block.png", {(float)(i * 64), (float)(y * 64)}, {64, 64}));
+                        _map_player1.push_back(new Game::Block("assets/block.png", {(float)(i * 64), (float)(y * 64)}, {64, 64}, '#'));
                     else if (y == 8) 
-                        _map_floor.push_back(new Game::Block("assets/block.png", {(float)(i * 64), (float)(y * 64)}, {64, 64}));
+                        _map_floor.push_back(new Game::Block("assets/block.png", {(float)(i * 64), (float)(y * 64)}, {64, 64}, '#'));
                     else
-                        _map_player2.push_back(new Game::Block("assets/block.png", {(float)(i * 64), (float)(y * 64)}, {64, 64}));
+                        _map_player2.push_back(new Game::Block("assets/block.png", {(float)(i * 64), (float)(y * 64)}, {64, 64}, '#'));
                 }
+                if (line[i] == 'E') {
+                    if (y < 8)
+                        _map_player1.push_back(new Game::Block("assets/obstacle2.png", {(float)(i * 64), (float)(y * 64)}, {64, 64}, 'E'));
+                    else if (y == 8) 
+                        _map_floor.push_back(new Game::Block("assets/obstacle2.png", {(float)(i * 64), (float)(y * 64)}, {64, 64}, 'E'));
+                    else
+                        _map_player2.push_back(new Game::Block("assets/obstacle2.png", {(float)(i * 64), (float)(y * 64)}, {64, 64}, 'E'));
+                } 
             }
             y += 1;
         }

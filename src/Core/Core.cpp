@@ -81,6 +81,10 @@ void Game::Core::Run()
             else if (_player2.getDirection() == Direction::RIGHT)
                 _player2.setDirection(Direction::LEFT);
         }
+        if (_player1.isEnd() && _player2.isEnd()) {
+            _window.close();
+            return;
+        }
         _parallax_p1.update(_dtime, _player1.getDirection());
         _parallax_p2.update(_dtime, _player2.getDirection());
         _parallax_p1.draw(_window);

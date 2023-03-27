@@ -35,6 +35,7 @@ namespace Game {
             virtual Game::Event getEvent() const = 0;
             virtual void draw(sf::RenderWindow &window) = 0;
             virtual void update(float deltaTime, Game::Direction direction) = 0;
+            virtual char getType() const = 0;
         protected:
         private:
     };

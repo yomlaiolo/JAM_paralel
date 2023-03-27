@@ -34,6 +34,7 @@ namespace Game {
             void setJumping(bool isJumping);
             bool isJumping();
             bool checkCollision(const std::vector<IBlock *> &blocks, float dtime);
+            bool isEnd();
         protected:
         private:
             sf::RenderWindow _window;
@@ -49,5 +50,6 @@ namespace Game {
             float _time;
             float _timesincelastjump;
             bool _isJumping;
+            bool _end = false;
     };
 }
