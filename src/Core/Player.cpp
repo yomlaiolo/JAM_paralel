@@ -65,6 +65,11 @@ void Game::Player::update(const float &dtime, int direction)
         if (_timesincelastjump >= 0.97) {
             _isJumping = false;
             _timesincelastjump = 0;
+            if (_position.y < 500)
+                _position.y = 414;
+            else
+                _position.y = 674;
+            _sprite.setPosition(_position.x, _position.y);
         }
     }
     if (_time > 0.2) {
