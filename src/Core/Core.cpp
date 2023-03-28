@@ -35,10 +35,11 @@ static void add_layer(Game::Parallax &parallax, std::string path, float speed, i
     parallax.addLayer(*sprite, speed);
 }
 
-void Game::Core::Run()
+void Game::Core::Run(std::string music_name)
 {
     sf::Music music;
-    music.openFromFile("assets/music.ogg");
+    std::cout << "assets/" + music_name << std::endl;
+    music.openFromFile("assets/" + music_name);
     music.play();
     music.setLoop(true);
 

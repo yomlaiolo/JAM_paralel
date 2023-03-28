@@ -18,7 +18,7 @@ namespace Game {
     public:
         Core(std::string option);
         ~Core();
-        void Run();
+        void Run(std::string music);
         float getDtime();
         void manageEvent();
     protected:
