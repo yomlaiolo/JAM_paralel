@@ -108,6 +108,7 @@ void Game::Core::Run()
         _player2.draw(_window);
         _window.display();
     }
+    music.stop();
 }
 
 float Game::Core::getDtime()
